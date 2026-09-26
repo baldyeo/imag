@@ -1,5 +1,5 @@
 import streamlit as st
-from google import genai
+import google.generativeai as genai
 
 # Konfigurasi Halaman Web
 st.set_page_config(page_title="Imagen Prompt Compiler", page_icon="🎨", layout="centered")
@@ -11,8 +11,8 @@ st.markdown("Ubah kata sederhana menjadi *highly descriptive prose* untuk Google
 api_key = st.text_input("Masukkan Google Gemini API Key Anda:", type="password")
 
 if api_key:
-    # Inisialisasi menggunakan format SDK Baru
-    client = genai.Client(api_key=api_key)
+    # Format konfigurasi SDK stabil
+    genai.configure(api_key=api_key)
     
     # Pengaturan Bahasa
     col1, col2 = st.columns(2)
@@ -32,22 +32,22 @@ if api_key:
         else:
             with st.spinner("Compiling & Translating..."):
                 try:
-                    # Core System Directive
+                    # System Directive
                     system_directive = f"""
                     You are the 'Imagen Natural Language Compiler'.
                     1. Translate the user's concept into {target_lang}.
                     2. Expand the simple concept into a highly detailed, natural language prose (60-90 words) optimized for Google's Imagen text-to-image architecture.
                     3. Structure the prose strictly with: Primary Subject details, Dynamic Action, Spatial Environment, Lighting & Mood, Cinematic Medium/Camera specs, and Micro-textural details.
-                    4. Output MUST be ONLY the compiled prompt in {target_lang}. No introductions, no bullet points, no technical parameters (like --ar or steps). Just one cohesive paragraph.
+                    4. Output MUST be ONLY the compiled prompt in {target_lang}. No introductions, no bullet points, no technical parameters. Just one cohesive paragraph.
                     
                     User Concept: {user_concept}
                     """
                     
-                    # Generate Respon dengan format SDK Baru
-                    response = client.models.generate_content(
-                        model='gemini-1.5-flash-002',
-                        contents=system_directive
-                    )
+                    # Inisialisasi model (menggunakan nama standar yang dijamin jalan di SDK ini)
+                    model = genai.GenerativeModel('gemini-1.5-flash')
+                    
+                    # Eksekusi Prompt
+                    response = model.generate_content(system_directive)
                     
                     # Menampilkan Hasil
                     st.success("✅ Compilation Successful!")
