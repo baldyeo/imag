@@ -40,7 +40,7 @@ if api_key:
                     """
                     
                     # Hardcode langsung ke model yang diinstruksikan oleh error message
-                    model = genai.GenerativeModel('gemini-2.5-flash')
+                    model = genai.GenerativeModel('gemini-3.8-flash')
                     
                     # Eksekusi Prompt
                     response = model.generate_content(system_directive)
