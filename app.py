@@ -1,5 +1,5 @@
 import streamlit as st
-from google import genai
+import google.generativeai as genai
 
 st.set_page_config(page_title="Imagen Prompt Compiler", page_icon="🎨", layout="centered")
 st.title("🌐 Multi-Lingual Imagen Prompt Expander")
