@@ -45,7 +45,7 @@ if api_key:
                     
                     # Generate Respon dengan format SDK Baru
                     response = client.models.generate_content(
-                        model='gemini-2.0-flash',
+                        model='gemini-1.5-flash-002',
                         contents=system_directive
                     )
                     
